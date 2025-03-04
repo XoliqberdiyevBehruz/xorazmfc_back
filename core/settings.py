@@ -145,14 +145,11 @@ CORS_ALLOW_METHODS = (
     "PUT",
 )
 
-CORS_ALLOW_HEADERS = (
-    "accept",
-    "authorization",
-    "content-type",
-    "user-agent",
-    "x-csrftoken",
-    "x-requested-with",
-)
+CSRF_TRUSTED_ORIGINS = [
+    "https://api.xorazmfc.uz",
+]
+
+
 
 LANGUAGES = (
     ('en', 'English'),
