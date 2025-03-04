@@ -137,17 +137,13 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost.3000",
 ]
 
-CORS_ALLOW_METHODS = (
-    "DELETE",
-    "GET",
-    "PATCH",
-    "POST",
-    "PUT",
-)
 
 CSRF_TRUSTED_ORIGINS = [
     "https://api.xorazmfc.uz",
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 
 
