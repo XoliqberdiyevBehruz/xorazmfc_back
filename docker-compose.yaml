@@ -54,7 +54,9 @@ services:
     container_name: nginx
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      # - /certs:/etc/nginx/ssl
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+
     depends_on:
       - django
     networks:
@@ -64,14 +66,12 @@ services:
     image: certbot/certbot
     container_name: certbot
     volumes:
-      - ./certbot/www:/var/www/certbot
       - ./certbot/conf:/etc/letsencrypt
-    command: certonly --webroot --webroot-path=/var/www/certbot --email xoliqbediyevbehruz@gmail.com --agree-tos --no-eff-email -d api.xorazmfc.uz
+      - ./certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email xoliqbediyevbehruz@gmail.com -d api.xorazmfc.uz --agree-tos
 
 volumes:
   postgresql_data:
-  certbot_conf: {}
-  certbot_www: {}
 
 networks:
   xorazmfc_network:
