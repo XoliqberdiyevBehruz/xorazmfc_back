@@ -15,7 +15,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', default=False)
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
+ALLOWED_HOSTS = ["http://api.xorazmfc.uz/", "https://api.xorazmfc.uz/", "http://45.130.148.45:8000/", "https://45.130.148.45:8000/"]
 
 
 # Application definition
