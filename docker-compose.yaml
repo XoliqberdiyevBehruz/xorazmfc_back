@@ -55,8 +55,6 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       # - /certs:/etc/nginx/ssl
-      - certbot_www:/var/www/certbot
-      - certbot_conf:/etc/letsencrypt
     depends_on:
       - django
     networks:
