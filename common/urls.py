@@ -34,4 +34,5 @@ urlpatterns = [
 
     # leaders
     path('leaders/list/', views.LeaderListApiView.as_view()),
+    path('search/', views.SearchApiView.as_view(), name='search_api_view'),
 ]

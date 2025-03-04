@@ -6,7 +6,7 @@ from django.db.models import Prefetch
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, GenericAPIView
 
 from common import models, serializers, pagination
 
@@ -207,3 +207,22 @@ class LeaderListApiView(ListAPIView):
     @method_decorator(cache_page(2*60, key_prefix='leader_list_cache'))
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
+    
+
+class SearchApiView(GenericAPIView):   
+    serializer_class = serializers.SearchSerializer
+
+    def post(self, request):
+        serializer = serializers.SearchSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        news = models.News.objects.filter(title__icontains=serializer.validated_data['search'])[:5]
+        players = models.Players.objects.filter(full_name__icontains=serializer.validated_data['search'])[:5]
+        coaches = models.Coach.objects.filter(full_name__icontains=serializer.validated_data['search'])[:5]
+        leaders = models.Leaders.objects.filter(full_name__icontains=serializer.validated_data['search'])[:5]
+        data = {
+            "news": serializers.NewsSerializer(news, many=True).data,  
+            "players": serializers.PlayerListSerializer(players, many=True).data,
+            "coaches": serializers.CoachListSerializer(coaches, many=True).data,
+            "leaders": serializers.LeaderListSerializer(leaders, many=True).data,
+        }
+        return Response(data, status=status.HTTP_200_OK)

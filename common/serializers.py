@@ -166,3 +166,7 @@ class LeaderListSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Leaders
         fields = ('id', 'full_name', 'image', 'position', 'country', 'birth_date')
+
+    
+class SearchSerializer(serializers.Serializer):
+    search = serializers.CharField(max_length=100)
