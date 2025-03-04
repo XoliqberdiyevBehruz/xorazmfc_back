@@ -10,12 +10,12 @@ env.read_env(os.path.join(BASE_DIR, '.env'))
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DEBUG', default=False)
+DEBUG = os.getenv('DEBUG', default=False)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 
 
 # Application definition
@@ -78,11 +78,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env.str('DB_NAME'),
-        'USER': env.str('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
 
@@ -166,14 +166,14 @@ MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
 CACHES = {
     "default": {
         'BACKEND': "django_redis.cache.RedisCache",
-        'LOCATION': "redis://127.0.0.1:6379/1",
+        'LOCATION': "redis://redis_db:6379/1",
         'OPTIONS': {
             'CLIENT': 'django_redis.client.DefaultClient',
         }
     }
 }
 
-CELERY_BROKER_URL ='redis://127.0.0.1:6379/2'
+CELERY_BROKER_URL ='redis://redis_db:6379/2'
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 INTERNAL_IPS = [

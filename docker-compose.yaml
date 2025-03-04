@@ -1,0 +1,68 @@
+version: "3.8"
+
+services:
+  redis:
+    container_name: redis_db
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - xorazmfc_network
+
+  postgres_db:
+    image: postgres:16
+    restart: always
+    ports:  
+     - 5433:5432
+    environment:
+      - POSTGRES_DB=$DB_NAME
+      - POSTGRES_USER=$DB_USER
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+      - POSTGRES_HOST=$DB_HOST
+      - POSTGRES_PORT=5433
+
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    networks:
+      - xorazmfc_network
+
+  django:
+    build: 
+      context: . 
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    env_file:
+      - ".env"
+    container_name: xorazmfc
+    volumes:
+      - .:/xorazmfc
+    depends_on:
+      - postgres_db
+      - redis
+    networks:
+      - xorazmfc_network
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports: 
+      - 80:80
+      - 443:443
+    container_name: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - /certs:/etc/nginx/ssl
+    depends_on:
+      - django
+    networks:
+      - xorazmfc_network
+
+volumes:
+  postgresql_data:
+
+networks:
+  xorazmfc_network:
+    driver: bridge
