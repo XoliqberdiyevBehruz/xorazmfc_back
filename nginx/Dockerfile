@@ -1,3 +1,3 @@
 FROM nginx:1.21.6
 
-COPY ./nginx.conf /etc/nginx/conf.d/fc.conf
+COPY ./nginx.conf /etc/nginx/nginx.conf
