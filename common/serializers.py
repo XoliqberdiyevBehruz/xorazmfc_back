@@ -71,8 +71,7 @@ class PlayerDetailSerializer(serializers.ModelSerializer):
         model = models.Players
         fields = (
             'id', 'full_name', 'number', 'image', 'goal', 'match', 
-            'assist', 'birth_date', 'height', 'description_uz', 
-            'description_ru', 'description_en', 'country', 'gender', 'position'
+            'assist', 'birth_date', 'height', 'country', 'gender', 'position'
         )
 
     def get_country(self, obj):

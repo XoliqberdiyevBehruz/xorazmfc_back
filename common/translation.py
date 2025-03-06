@@ -9,10 +9,7 @@ class NewsCategoryTranslationOptions(translator.TranslationOptions):
 @translator.register(models.News)
 class NewsTranslationOptions(translator.TranslationOptions):
     fields = ('title', 'description')
-
-@translator.register(models.Players)
-class PlayersTranslationOptions(translator.TranslationOptions):
-    fields = ('description',)
+    
 
 @translator.register(models.PlayerPosition)
 class PlayerPositionTranslationOptions(translator.TranslationOptions):

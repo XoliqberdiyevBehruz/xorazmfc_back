@@ -66,10 +66,10 @@ class PlayerCountryAdmin(admin.ModelAdmin):
 
 
 @admin.register(models.Players)
-class PlayersAdmin(TranslationAdmin):
+class PlayersAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'country_name', 'gender', 'created_at')
     list_filter = ('country', 'gender', 'created_at')
-    search_fields = ('full_name', 'description')
+    search_fields = ('full_name',)
     autocomplete_fields = ('country', 'position')  
 
     def country_name(self, obj):

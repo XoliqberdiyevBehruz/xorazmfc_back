@@ -79,7 +79,6 @@ class Players(BaseModel):
     assist = models.IntegerField()
     birth_date = models.DateField()
     height = models.CharField(max_length=255)
-    description = models.TextField()
     country = models.ForeignKey(PlayerCountry, on_delete=models.CASCADE, related_name='players')
     gender = models.CharField(max_length=255, choices=GENDER)
     position = models.ForeignKey(PlayerPosition, on_delete=models.CASCADE, related_name='players')
