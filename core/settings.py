@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework',
     'corsheaders',
-    'debug_toolbar',
+    # 'debug_toolbar',
     # apps
     'common',
 ]
@@ -169,9 +169,9 @@ CACHES = {
 CELERY_BROKER_URL ='redis://redis_db:6379/2'
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
+# INTERNAL_IPS = [
+#     "127.0.0.1",
+# ]
 
 JAZZMIN_SETTINGS = {
     "language_chooser": True,
