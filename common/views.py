@@ -13,7 +13,7 @@ from common import models, serializers, pagination
 class NewsCategoryListApiView(APIView):
     @method_decorator(cache_page(2*60, key_prefix='news_category_list_cache'))
     def get(self, request):
-        categories = models.NewsCategory.objects.values('id', 'name_uz', 'name_ru', 'name_en').order_by('-created_at')
+        categories = models.NewsCategory.objects.values('id', 'name_uz', 'name_ru', 'name_en').order_by('created_at')
         serializer = serializers.NewsCategorySerializer(categories, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
@@ -26,7 +26,7 @@ class NewsListApiView(ListAPIView):
         category = models.NewsCategory.objects.filter(id=self.kwargs.get('id'))
         if not category:
             return Response({'error': 'Category not found'}, status=status.HTTP_404_NOT_FOUND)
-        return models.News.objects.filter(category_id=self.kwargs.get('id')).select_related('category').order_by('-created_at')
+        return models.News.objects.filter(category_id=self.kwargs.get('id')).select_related('category').order_by('created_at')
    
     @method_decorator(cache_page(2*60, key_prefix='news_list_cache'))
     def list(self, request, *args, **kwargs):
@@ -55,7 +55,7 @@ class NewsDetailApiView(RetrieveAPIView):
 class PlayerManListApiView(APIView):
     @method_decorator(cache_page(2*60, key_prefix='player_list_cache'))
     def get(self, request):
-        players = models.PlayerPosition.objects.prefetch_related(Prefetch('players', queryset=models.Players.objects.filter(gender=models.MAN))).order_by('-created_at')
+        players = models.PlayerPosition.objects.prefetch_related(Prefetch('players', queryset=models.Players.objects.filter(gender=models.MAN))).order_by('created_at')
         serializer = serializers.PlayerPosiotionListSerializer(players, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -63,7 +63,7 @@ class PlayerManListApiView(APIView):
 class PlayerWomanListApiView(APIView):
     @method_decorator(cache_page(2*60, key_prefix='player_list_cache'))
     def get(self, request):
-        players = models.PlayerPosition.objects.prefetch_related(Prefetch('players', queryset=models.Players.objects.filter(gender=models.WOMEN))).order_by('-created_at')
+        players = models.PlayerPosition.objects.prefetch_related(Prefetch('players', queryset=models.Players.objects.filter(gender=models.WOMEN))).order_by('created_at')
         serializer = serializers.PlayerPosiotionListSerializer(players, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
@@ -71,14 +71,14 @@ class PlayerWomanListApiView(APIView):
 class PlayerU19ListApiView(APIView):
     @method_decorator(cache_page(2*60, key_prefix='player_list_cache'))
     def get(self, request):
-        players = models.PlayerPosition.objects.prefetch_related(Prefetch('players', queryset=models.Players.objects.filter(gender=models.U19))).order_by('-created_at')
+        players = models.PlayerPosition.objects.prefetch_related(Prefetch('players', queryset=models.Players.objects.filter(gender=models.U19))).order_by('created_at')
         serializer = serializers.PlayerPosiotionListSerializer(players, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 class PlayerU21ListApiView(APIView):
     @method_decorator(cache_page(2*60, key_prefix='player_list_cache'))
     def get(self, request):
-        players = models.PlayerPosition.objects.prefetch_related(Prefetch('players', queryset=models.Players.objects.filter(gender=models.U21))).order_by('-created_at')
+        players = models.PlayerPosition.objects.prefetch_related(Prefetch('players', queryset=models.Players.objects.filter(gender=models.U21))).order_by('created_at')
         serializer = serializers.PlayerPosiotionListSerializer(players, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
@@ -96,7 +96,7 @@ class PlayerDetailApiView(APIView):
 class PartnerListApiView(APIView):
     @method_decorator(cache_page(2*60, key_prefix='partner_list_cache'))
     def get(self, request):
-        queryset = models.Partners.objects.all().order_by('-created_at')
+        queryset = models.Partners.objects.all().order_by('created_at')
         serializer = serializers.PartnerLogoListSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -106,7 +106,7 @@ class AboutCompanyApiView(ListAPIView):
 
     @method_decorator(cache_page(2*60, key_prefix='about_company_list_cache'))
     def list(self, request, *args, **kwargs):   
-        queryset = models.AboutCompany.objects.all().order_by('-created_at')
+        queryset = models.AboutCompany.objects.all().order_by('created_at')
         serializer = serializers.AboutCompanySerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
@@ -116,7 +116,7 @@ class StadiumListApiView(ListAPIView):
 
     @method_decorator(cache_page(2*60, key_prefix='stadium_list_cache'))
     def list(self, request, *args, **kwargs):
-        queryset = models.Stadium.objects.all().order_by('-created_at')
+        queryset = models.Stadium.objects.all().order_by('created_at')
         serializer = serializers.StadiumSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
@@ -126,7 +126,7 @@ class BannerListApiView(ListAPIView):
 
     @method_decorator(cache_page(2*60, key_prefix='banner_list_cache'))
     def list(self, request, *args, **kwargs):
-        queryset = models.Banner.objects.all().order_by('-created_at')
+        queryset = models.Banner.objects.all().order_by('created_at')
         serializer = serializers.BannerListSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -136,7 +136,7 @@ class AboutAcademyApiView(ListAPIView):
     
     @method_decorator(cache_page(2*60, key_prefix='about_academy_list_cache'))
     def list(self, request, *args, **kwargs):
-        data = models.AboutAcademy.objects.all().order_by('-created_at')
+        data = models.AboutAcademy.objects.all().order_by('created_at')
         serializer = serializers.AboutAcademySerializer(data, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
@@ -145,7 +145,7 @@ class CoachListManApiView(ListAPIView):
     serializer_class = serializers.CoachListSerializer
     queryset = models.Coach.objects.filter(gender=models.MAN, coach_type=models.TEAM_COACH).only(
         'id', 'full_name', 'image', 'position_id'
-    ).select_related('position').order_by('-created_at')
+    ).select_related('position').order_by('created_at')
 
     @method_decorator(cache_page(2*60, key_prefix='coach_list_man_cache'))
     def list(self, request, *args, **kwargs):
@@ -156,7 +156,7 @@ class CoachListWomenApiView(ListAPIView):
     serializer_class = serializers.CoachListSerializer
     queryset = models.Coach.objects.filter(gender=models.WOMEN, coach_type=models.TEAM_COACH).only(
         'id', 'full_name', 'image', 'position_id'
-    ).select_related('position').order_by('-created_at')
+    ).select_related('position').order_by('created_at')
 
     @method_decorator(cache_page(2*60, key_prefix='coach_list_woman_cache'))
     def list(self, request, *args, **kwargs):
@@ -165,7 +165,7 @@ class CoachListWomenApiView(ListAPIView):
 
 class CoachDetailApiView(RetrieveAPIView):
     serializer_class = serializers.CoachDetailSerializer
-    queryset = models.Coach.objects.select_related('position').order_by('-created_at')
+    queryset = models.Coach.objects.select_related('position').order_by('created_at')
     lookup_field = 'id'
 
     @method_decorator(cache_page(2*60, key_prefix='coach_detail_cache'))
@@ -175,7 +175,7 @@ class CoachDetailApiView(RetrieveAPIView):
 
 class CoachTableListManApiView(ListAPIView):
     serializer_class = serializers.CoachTableListSerializer
-    queryset = models.Coach.objects.filter(gender=models.MAN).only('id', 'full_name', 'position_id').select_related('position').order_by('-created_at')
+    queryset = models.Coach.objects.filter(gender=models.MAN).only('id', 'full_name', 'position_id').select_related('position').order_by('created_at')
 
     @method_decorator(cache_page(2*60, key_prefix='coach_table_list_cache'))
     def list(self, request, *args, **kwargs):
@@ -185,7 +185,7 @@ class CoachTableListManApiView(ListAPIView):
 
 class CoachTableListWomenApiView(ListAPIView):
     serializer_class = serializers.CoachTableListSerializer
-    queryset = models.Coach.objects.filter(gender=models.WOMEN).only('id', 'full_name', 'position_id').select_related('position').order_by('-created_at')
+    queryset = models.Coach.objects.filter(gender=models.WOMEN).only('id', 'full_name', 'position_id').select_related('position').order_by('created_at')
 
     @method_decorator(cache_page(2*60, key_prefix='coach_table_list_cache'))
     def list(self, request, *args, **kwargs):
@@ -194,7 +194,7 @@ class CoachTableListWomenApiView(ListAPIView):
 
 class CoachAcademyListApiView(ListAPIView):
     serializer_class = serializers.CoachListSerializer
-    queryset = models.Coach.objects.filter(coach_type=models.ACADEMY_COACH).select_related('position').order_by('-created_at')
+    queryset = models.Coach.objects.filter(coach_type=models.ACADEMY_COACH).select_related('position').order_by('created_at')
 
     @method_decorator(cache_page(2*60, key_prefix='coach_academy_list_cache'))
     def list(self, request, *args, **kwargs):
@@ -202,7 +202,7 @@ class CoachAcademyListApiView(ListAPIView):
     
 class LeaderListApiView(ListAPIView):
     serializer_class = serializers.LeaderListSerializer
-    queryset = models.Leaders.objects.order_by('-created_at')
+    queryset = models.Leaders.objects.order_by('created_at')
 
     @method_decorator(cache_page(2*60, key_prefix='leader_list_cache'))
     def list(self, request, *args, **kwargs):
