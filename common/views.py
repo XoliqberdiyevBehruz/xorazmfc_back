@@ -26,7 +26,7 @@ class NewsListApiView(ListAPIView):
         category = models.NewsCategory.objects.filter(id=self.kwargs.get('id'))
         if not category:
             return Response({'error': 'Category not found'}, status=status.HTTP_404_NOT_FOUND)
-        return models.News.objects.filter(category_id=self.kwargs.get('id')).select_related('category').order_by('created_at')
+        return models.News.objects.filter(category_id=self.kwargs.get('id')).select_related('category').order_by('-created_at')
    
     @method_decorator(cache_page(2*60, key_prefix='news_list_cache'))
     def list(self, request, *args, **kwargs):
