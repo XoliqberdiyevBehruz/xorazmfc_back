@@ -7,6 +7,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, RetrieveAPIView, GenericAPIView
+import requests
+from datetime import datetime
+import json
 
 from common import models, serializers, pagination
 
@@ -226,3 +229,31 @@ class SearchApiView(GenericAPIView):
             "leaders": serializers.LeaderListSerializer(leaders, many=True).data,
         }
         return Response(data, status=status.HTTP_200_OK)
+
+
+class GetTableApiView(APIView):
+    @method_decorator(cache_page(5*60))
+    def get(self, request):
+        r = requests.get(
+            "https://api.pfl.uz/v1/web/game/table"
+        )
+        if r.status_code == 200:
+            data = r.json()
+            table_data = data.get("data", {}).get("table", [])  
+            return Response(table_data)
+        return Response({"message": "bad request"})
+
+
+class TableApiView(APIView):
+    def get(self, request):
+        r = requests.get(
+            "https://api.pfl.uz/v1/web/game/calendar?tournamentId=1&seasonId=10&clubId=23"
+        )
+        if r.status_code == 200:
+            data = r.json().get("data", {}).get("table", [])
+
+            return Response(data)
+
+        return Response({"message": "Bad request"})
+    
+
