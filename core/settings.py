@@ -160,8 +160,9 @@ CACHES = {
     "default": {
         'BACKEND': "django_redis.cache.RedisCache",
         'LOCATION': "redis://redis_db:6379/1",
-        'OPTIONS': {
-            'CLIENT': 'django_redis.client.DefaultClient',
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100},
         }
     }
 }
