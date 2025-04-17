@@ -29,7 +29,7 @@ class NewsDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.News
-        fields = ('id', 'slug', 'title_uz', 'title_ru', 'title_en', 'description_uz', 'description_ru', 'description_en', 'image', 'date')
+        fields = ('id', 'slug', 'title_uz', 'title_ru', 'title_en', 'description_uz', 'description_ru', 'description_en', 'image', 'date', 'video')
     
     def get_date(self, obj):
         return obj.created_at.date()
