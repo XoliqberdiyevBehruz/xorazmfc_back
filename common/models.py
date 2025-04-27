@@ -32,7 +32,8 @@ class News(BaseModel):
     image = models.ImageField(upload_to='news/%Y/%m/')
     category = models.ForeignKey(NewsCategory, on_delete=models.CASCADE, related_name='news')
     video = models.FileField(upload_to='news/%Y/%m/', null=True, blank=True)
-    
+    link = models.URLField(null=True, blank=True)
+
     def __str__(self):
         return self.title
     
@@ -40,6 +41,14 @@ class News(BaseModel):
         verbose_name = _("yangiliklar")
         verbose_name_plural = _('yangiliklar')
 
+
+class NewsMedia(BaseModel):
+    image = models.ImageField(upload_to='news_media')
+    news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='medias')
+
+    def __str__(self):
+        return self.image.name
+    
 
 class PlayerCountry(BaseModel):
     flag = models.ImageField(upload_to='flags/%Y/%m/')
