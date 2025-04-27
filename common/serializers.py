@@ -24,14 +24,14 @@ class NewsSerializer(serializers.ModelSerializer):
         return obj.category.name
 
 
-# class NewsMediaSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = models.NewsMedia
-#         fields = ['id', 'image']
+class NewsMediaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.NewsMedia
+        fields = ['id', 'image']
 
 class NewsDetailSerializer(serializers.ModelSerializer):
     date = serializers.SerializerMethodField(method_name='get_date')
-    # media = serializers.SerializerMethodField(method_name='get_media')
+    media = serializers.SerializerMethodField(method_name='get_media')
 
     class Meta:
         model = models.News
@@ -40,8 +40,8 @@ class NewsDetailSerializer(serializers.ModelSerializer):
     def get_date(self, obj):
         return obj.created_at.date()
     
-    # def get_media(self, obj):
-    #     return NewsMediaSerializer(obj.medias, many=True).data
+    def get_media(self, obj):
+        return NewsMediaSerializer(obj.medias, many=True).data
 
 class PlayerListSerializer(serializers.ModelSerializer):
     class Meta:
