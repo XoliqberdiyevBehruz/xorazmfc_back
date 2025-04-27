@@ -39,14 +39,6 @@ class News(BaseModel):
     class Meta:
         verbose_name = _("yangiliklar")
         verbose_name_plural = _('yangiliklar')
-
-
-class NewsMedia(BaseModel):
-    image = models.ImageField(upload_to='news_media')
-    news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='medias')
-
-    def __str__(self):
-        return self.image.name
     
 
 class PlayerCountry(BaseModel):
