@@ -30,9 +30,9 @@ class NewsCategoryAdmin(TranslationAdmin):
             news_count=Count('news')
         )
 
-class NewsMediaInline(admin.TabularInline):
-    model = models.NewsMedia
-    extra = 1
+# class NewsMediaInline(admin.TabularInline):
+#     model = models.NewsMedia
+#     extra = 1
     
 
 @admin.register(models.News)
@@ -44,7 +44,7 @@ class NewsAdmin(TranslationAdmin):
         'slug': ('title_uz',)
     }
     autocomplete_fields = ('category',)
-    inlines = [NewsMediaInline]
+    # inlines = [NewsMediaInline]
 
 
 @admin.register(models.PlayerCountry)
