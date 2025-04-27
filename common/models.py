@@ -32,7 +32,7 @@ class News(BaseModel):
     image = models.ImageField(upload_to='news/%Y/%m/')
     category = models.ForeignKey(NewsCategory, on_delete=models.CASCADE, related_name='news')
     video = models.FileField(upload_to='news/%Y/%m/', null=True, blank=True)
-    link = models.URLField(null=True, blank=True)
+    url = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.title
