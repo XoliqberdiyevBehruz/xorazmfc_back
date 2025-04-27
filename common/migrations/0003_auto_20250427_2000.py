@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('image', models.ImageField(upload_to='news_media')),
-                ('news', models.ForeignKey(on_delete=models.CASCADE, related_name='medias', to='your_app.News')),
+                ('news', models.ForeignKey(on_delete=models.CASCADE, related_name='medias', to='common.News')),
             ],
             options={
                 'abstract': False,
